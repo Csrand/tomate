@@ -26,6 +26,12 @@
             justify-content: center;
             padding: 1rem;
         }
+        #tomate {
+            transition: transform 0.6s ease-out;
+        }
+        #tomate.girar {
+            transform: rotate(-360deg);
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -42,44 +48,38 @@
     </header>
 
     <main class="flex-grow flex items-center justify-center">
-        <!-- Painel do Timer (como um formulário/cartão) -->
         <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200 max-w-md w-full text-center">
-            <h1 class="text-2xl md:text-5xl font-bold text-red-800">
+            <h1 class="text-2xl md:text-5xl font-bold text-red-800 mb-2">
                 Tomate
             </h1>
 
-            <!-- Tomate centralizado -->
             <div class="flex justify-center mb-6">
                 <img
+                    id="tomate"
                     src="public/tomate.webp"
                     alt="desenho de tomate feito à mão."
-                    class="h-40 w-40 md:h-48 md:w-48 lg:h-56 lg:w-56 "
+                    class="h-40 w-40 md:h-48 md:w-48 lg:h-56 lg:w-56"
                 />
             </div>
 
-            <!-- Display do Timer -->
-            <div class="text-6xl font-bold text-red-800 font-mono mb-8">
+            <div id="timer" class="text-6xl font-bold text-red-800 font-mono mb-8">
                 25:00
             </div>
 
-            <!-- Botões de controle -->
             <div class="flex justify-center gap-4">
-                <!-- Play -->
-                <button class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
+                <button id="play" class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:scale-105 active:scale-95 transition-transform duration-200 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
                     </svg>
                 </button>
 
-                <!-- Pause -->
-                <button class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
+                <button id="pause" class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:scale-105 active:scale-95 transition-transform duration-200 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
                     </svg>
                 </button>
 
-                <!-- Reset -->
-                <button class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
+                <button id="reset" class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:scale-105 active:scale-95 transition-transform duration-200 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
@@ -94,5 +94,75 @@
         </div>
     </footer>
 
+    <script>
+        const timerElement = document.getElementById('timer');
+        const playButton = document.getElementById('play');
+        const pauseButton = document.getElementById('pause');
+        const resetButton = document.getElementById('reset');
+        const tomate = document.getElementById('tomate');
+        let timeLeft = 25 * 60; // 25 minutos
+        let interval = null;
+        let isRunning = false;
+
+        if ("Notification" in window) {
+            Notification.requestPermission();
+        }
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const seconds = (timeLeft % 60).toString().padStart(2, '0');
+            timerElement.textContent = `${minutes}:${seconds}`;
+        }
+
+        function start() {
+            if (isRunning) return;
+            isRunning = true;
+            interval = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+
+                if (timeLeft <= 0) {
+                    stop();
+                    if (typeof Notification !== "undefined") {
+                        if (Notification.permission === "granted") {
+                            new Notification("🍅 Tempo esgotado!", {
+                                body: "Vá descansar um pouco!",
+                                icon: "public/tomate.webp"
+                            });
+                        } else if (Notification.permission === "default") {
+                            Notification.requestPermission().then(permission => {
+                                if (permission === "granted") {
+                                    new Notification("🍅 Tempo esgotado!", {
+                                        body: "Vá descansar um pouco!",
+                                        icon: "public/tomate.webp"
+                                    });
+                                }
+                            });
+                        }
+                    }
+                    alert("Tempo esgotado! 🍅");
+                }
+            }, 1000);
+        }
+        function stop() {
+            isRunning = false;
+            clearInterval(interval);
+            interval = null;
+        }
+
+        function reset() {
+            stop();
+            timeLeft = 25 * 60;
+            updateDisplay();
+            tomate.classList.remove('girar');
+            setTimeout(() => {
+                tomate.classList.add('girar');
+            }, 10);
+        }
+        playButton.onclick = start;
+        pauseButton.onclick = stop;
+        resetButton.onclick = reset;
+        updateDisplay();
+    </script>
 </body>
 </html>
