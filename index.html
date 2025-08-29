@@ -1,100 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Tomate | Timer</title>
-        <meta name="description" content="A powerful tool designed for speed, simplicity, and results." />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tomate | Timer</title>
+    <meta name="description" content="A powerful tool designed for speed, simplicity, and results." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9fafb;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
 
-        <!-- Tailwind CSS via CDN (for prototyping) -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <style>
-         body, html {
-             margin: 0;
-             padding: 0;
-             height: 100%;
-         }
-         body {
-             font-family: 'Inter', sans-serif;
-             display: flex;
-             flex-direction: column;
-         }
-         main {
-             flex: 1;
-         }
-        </style>
-    </head>
-    <body class="bg-white text-gray-800">
+    <header class="bg-red-800 shadow-sm">
+        <div class="container mx-auto px-6 py-3 flex items-center gap-4">
+            <img
+                src="public/logo.webp"
+                alt="Tomate logo"
+                class="h-10 w-auto border-2 border-cyan-50 rounded-full"
+            >
+            <a href="#" class="font-bold text-xl text-cyan-50">CsWxrld</a>
+        </div>
+    </header>
 
-        <header class="bg-red-800 shadow-sm">
-            <div class="container mx-auto px-6 py-4 flex items-center gap-4">
+    <main class="flex-grow flex items-center justify-center">
+        <!-- Painel do Timer (como um formulário/cartão) -->
+        <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200 max-w-md w-full text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-red-800 mb-6">
+                Tomate
+            </h1>
+
+            <!-- Tomate centralizado -->
+            <div class="flex justify-center mb-6">
                 <img
-                    src="public/logo.webp"
-                    alt="Tomate logo"
-                    class="h-10 w-auto border rounded-full"
-                >
-                <a href="#" class="font-bold text-xl text-cyan-50">CsWxrld</a>
+                    src="public/tomate.webp"
+                    alt="desenho de tomate feito à mão."
+                    class="h-40 w-40 md:h-48 md:w-48 lg:h-56 lg:w-56 "
+                />
             </div>
-        </header>
 
-        <main class="flex-grow" >
-            <section class="hero py-20 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-red-800 mb-6">
-                    Tomate
-                </h1>
-                <div class="container mx-auto px-6">
-                    <div class="flex justify-center mb-6">
-
-                    </div>
-                    <div class="text-6xl font-bold text-red-800 mt-8 font-mono">
-                        25:00
-                    </div>
-
-                    <!-- Botões com ícones SVG -->
-                    <div class="flex justify-center gap-4 mt-6">
-                        <!-- Start (Play) -->
-                        <button class="bg-red-800 text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-                            </svg>
-                        </button>
-
-                        <!-- Pause -->
-                        <button class="bg-red-800 text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
-                            </svg>
-                        </button>
-
-                        <!-- Reset -->
-                        <button class="bg-red-800 text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </section>
-        </main>        <!-- Footer -->
-        <footer class="py-10 bg-red-800 text-center text-cyan-50 text-sm">
-            <div class="container mx-auto px-6">
-                <p>&copy; 2025 YourBrand. All rights reserved.
-                    <a href="#" class="underline ml-4">Privacy</a>
-                    <a href="#" class="underline ml-4">Terms</a>
-                </p>
+            <!-- Display do Timer -->
+            <div class="text-6xl font-bold text-red-800 font-mono mb-8">
+                25:00
             </div>
-        </footer>
 
-        <!-- Optional: Analytics or Click Tracking -->
-        <script>
-         document.querySelectorAll('a[href="#cta"], .cta a').forEach(link => {
-             link.addEventListener('click', () => {
-                 if (typeof gtag !== 'undefined') {
-                     gtag('event', 'conversion', { 'event_category': 'CTA_Click' });
-                 }
-             });
-         });
-        </script>
-    </body>
+            <!-- Botões de controle -->
+            <div class="flex justify-center gap-4">
+                <!-- Play -->
+                <button class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                    </svg>
+                </button>
+
+                <!-- Pause -->
+                <button class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+                    </svg>
+                </button>
+
+                <!-- Reset -->
+                <button class="bg-red-800 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-105 transition-all duration-200 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-6 bg-red-800 text-center text-cyan-50 text-sm">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2025 Csrand. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
 </html>
